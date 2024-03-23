@@ -1,42 +1,43 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
-This script lists 10 commits (from the most recent to oldest) of a given repository by the user.
-Usage: ./100-github_commits.py [repository name] [owner name]
+This script lists 10 commits (from the most recent to oldest)
+of a specified repository by the specified owner.
 """
 
 import requests
 import sys
+import time
 
-def list_commits(repository, owner):
-    # GitHub API endpoint for listing commits
-    url = f"https://api.github.com/repos/{owner}/{repository}/commits"
-
-    # Make a GET request to the GitHub API
+def get_commits(repo, owner):
+    url = f"https://api.github.com/repos/{owner}/{repo}/commits"
     response = requests.get(url)
-
-    # Check if the request was successful (status code 200)
     if response.status_code == 200:
-        # Parse the JSON response
         commits = response.json()
-
-        # Print the list of commits
-        for commit in commits[:10]:  # Get the first 10 commits
-            sha = commit['sha']
-            author_name = commit['commit']['author']['name']
-            print(f"{sha}: {author_name}")
+        return commits
+    elif response.status_code == 403:  # Rate limit exceeded
+        print("Rate limit exceeded. Waiting for one minute...")
+        time.sleep(60)
+        return get_commits(repo, owner)
     else:
-        # Print an error message if the request was not successful
-        print(f"Error: Failed to fetch commits. Status code: {response.status_code}")
+        print(f"Error: {response.status_code}")
+        return []
 
-if __name__ == "__main__":
-    # Check if the correct number of arguments is provided
+def main():
     if len(sys.argv) != 3:
-        print("Usage: ./100-github_commits.py [repository name] [owner name]")
+        print("Usage: ./script.py <repository name> <owner name>")
         sys.exit(1)
 
-    # Get the repository name and owner name from command line arguments
-    repository_name = sys.argv[1]
-    owner_name = sys.argv[2]
+    repo = sys.argv[1]
+    owner = sys.argv[2]
 
-    # List commits for the given repository and owner
-    list_commits(repository_name, owner_name)
+    commits = get_commits(repo, owner)
+    if commits:
+        for commit in commits[:10]:  # Print only the first 10 commits
+            sha = commit['sha']
+            author = commit['commit']['author']['name']
+            print(f"{sha}: {author}")
+    else:
+        print("No commits found.")
+
+if __name__ == "__main__":
+    main()
