@@ -1,0 +1,66 @@
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+>>> say_my_name("John", "Smith")
+My name is John Smith
+>>> say_my_name("Walter", "White")
+My name is Walter White
+>>> say_my_name("Bob")
+My name is Bob 
+>>> say_my_name("Emmanuel", "Obolo")
+My name is Emmanuel Obolo
+>>> say_my_name("Abiodun")
+My name is Abiodun 
+>>> say_my_name()
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 32, in <module>
+    say_my_name()
+TypeError: say_my_name() missing 1 required positional argument: 'first_name'
+>>> say_my_name(2, "Asaph")
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 33, in <module>
+    say_my_name(2, "Asaph")
+  File "./3-say_my_name.py", line 21, in say_my_name
+    raise TypeError("first_name must be a string")
+TypeError: first_name must be a string
+>>> say_my_name(2, 2.25)
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 34, in <module>
+    say_my_name(2, 2.25)
+  File "./3-say_my_name.py", line 21, in say_my_name
+    raise TypeError("first_name must be a string")
+TypeError: first_name must be a string
+>>> say_my_name(None)
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 35, in <module>
+    say_my_name(None)
+  File "./3-say_my_name.py", line 21, in say_my_name
+    raise TypeError("first_name must be a string")
+TypeError: first_name must be a string
+>>> say_my_name([2, 4, 5, 6, 8])
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 36, in <module>
+    say_my_name([2, 4, 5, 6, 8])
+  File "./3-say_my_name.py", line 21, in say_my_name
+    raise TypeError("first_name must be a string")
+TypeError: first_name must be a string
+>>> say_my_name({"name": "obolo"})
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 37, in <module>
+    say_my_name({"name": "obolo"})
+  File "./3-say_my_name.py", line 21, in say_my_name
+    raise TypeError("first_name must be a string")
+TypeError: first_name must be a string
+>>> say_my_name((1, 4, 5))
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 38, in <module>
+    say_my_name((1, 4, 5))
+  File "./3-say_my_name.py", line 21, in say_my_name
+    raise TypeError("first_name must be a string")
+TypeError: first_name must be a string
+>>> say_my_name("Asaph", 34)
+Traceback (most recent call last):
+  File "./3-say_my_name.py", line 39, in <module>
+    say_my_name("Asaph", 34)
+  File "./3-say_my_name.py", line 23, in say_my_name
+    raise TypeError("last_name must be a string")
+TypeError: last_name must be a string
